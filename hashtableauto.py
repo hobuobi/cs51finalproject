@@ -1,30 +1,32 @@
-import re, collections
+from collections import defaultdict
+import re
 
-def words(text): return re.findall('[a-z]+', text.lower())
+letters = 'abcdefghijklmnopqrstuvwxyz'
 
-def train(features):
-    model = collections.defaultdict(lambda: 1)
-    for f in features:
-        model[f] += 1
-    return model
-
-NWORDS = train(words(file('words.txt').read()))
-
-alphabet = 'abcdefghijklmnopqrstuvwxyz'
-
-def edits1(word):
-   splits     = [(word[:i], word[i:]) for i in range(len(word) + 1)]
-   deletes    = [a + b[1:] for a, b in splits if b]
-   transposes = [a + b[1] + b[0] + b[2:] for a, b in splits if len(b)>1]
-   replaces   = [a + c + b[1:] for a, b in splits for c in alphabet if b]
-   inserts    = [a + c + b     for a, b in splits for c in alphabet]
-   return set(deletes + transposes + replaces + inserts)
-
-def known_edits2(word):
-    return set(e2 for e1 in edits1(word) for e2 in edits1(e1) if e2 in NWORDS)
-
-def known(words): return set(w for w in words if w in NWORDS)
+def DLalg(word):
+   splitset = [(word[:x],word[x:]) for x in range(len(word)+1)]
+   deleteset = [x+y[1:] for (x,y) in splitset if y]
+   transposeset = [x+y[1]+y[0]+y[2:] for (x,y) in splitset if len(y)>1]
+   replaceset = [x+z+y[1:] for (x,y) in splitset for z in letters if y]
+   insertset = [x+z+y for (x,y) in splitset for z in letters]
+   return set(deleteset+transposeset+replaceset+insertset)
 
 def correct(word):
-    candidates = known([word]) or known(edits1(word)) or known_edits2(word) or [word]
-    return max(candidates, key=NWORDS.get)
+    text = file('words.txt').read()
+    words = re.findall('[a-z]+', text.lower())
+    wordlist = defaultdict(lambda:1)
+    for f in words:
+        wordlist[f] += 1
+
+    if word in wordlist:
+        c1 = [word]
+    else:
+        c1 = []
+    c2 = set(x for x in DLalg(word) if x in wordlist)
+    c3 = set(y for x in DLalg(word) for y in DLalg(x) if y in wordlist)
+    candidates = c1 or c2 or c3 or [word]
+    return max(candidates,key=wordlist.get)
+
+print(correct('dawg'))
+print(correct('bollocks'))
+print(correct('the'))
