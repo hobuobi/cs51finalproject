@@ -3,3 +3,24 @@
 2. Figure out Django again
 
 ** Maybe use Coffeescript and Stylus?
+
+Python —> Django backend —>
+
+or Ruby —> Rails backend —>
+
+Work in command-line (output 3 most likely correct spellings)
+
+Implement website
+
+Try multiple data structures: tries, hash tables, etc. logging speeds
+
+Revise what we wrote about website —> not optimal
+Still need to use MVC
+Use Python/Ruby, not PHP for Controller
+Don’t store dictionary in SQL, load into RAM server-side in Python
+
+Add more than Damerau-Levenstein?
+
+Add to final project repository
+
+dictionary bound: 17 letters
