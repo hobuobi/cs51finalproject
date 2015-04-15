@@ -1,0 +1,5 @@
+1. Obtain dictionary of useful everyday words
+  a. Potential method: parse media articles
+2. Figure out Django again
+
+** Maybe use Coffeescript and Stylus?
