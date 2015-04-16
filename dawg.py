@@ -1,4 +1,4 @@
-f = open('words/words.txt', 'r');
+f = open('words.txt', 'r');
 
 class DawgNode:
     NextId = 0

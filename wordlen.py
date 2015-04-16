@@ -1,4 +1,4 @@
-f = open("words/words.txt", "r");
+f = open("words.txt", "r");
 
 wordlength = 0;
 

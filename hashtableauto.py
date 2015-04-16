@@ -8,7 +8,7 @@ def train(features):
         model[f] += 1
     return model
 
-NWORDS = train(words(file('words/words.txt').read()))
+NWORDS = train(words(file('words.txt').read()))
 
 alphabet = 'abcdefghijklmnopqrstuvwxyz'
 
