@@ -17,50 +17,53 @@ def getwords(filename):
     words = re.findall('[a-z]+', text.lower())
     return words
 
-def hashtable(words):
-    hashed = [[] for x in range(50)]
-    for word in words:
-        hashed[(random.seed(word)).randint(0,49)].append(word)
+class hashtable(object):
 
-    def lookup(word):
-        return (word in hashed[(random.seed(word)).randint(0,49)])
+    def __init__(self, words):
+        self.hashed = [[] for x in range(50)]
+        for word in words:
+            random.seed(word)
+            (self.hashed[random.randint(0,49)]).append(word)
 
-def dl_algorithm(filename, structtype):
-    if structtype = 1:
-        try:
-            dict = hashtable(getwords(filename))
-        except MethodError:
-            print ("The hashtable methods are not working properly... yet. - Larry Zhang, 2015")
-    elif structtype = 2:
-        try:
-            dict = trie(getwords(filename))
-        except MethodError:
-            print ("The trie methods are not working properly... yet. - Humphrey Obuobi, 2015")
-    elif structtype = 3:
-        try:
-            dict = dawg(getwords(filename))
-        except MethodError:
-            print ("The D.A.W.G. methods are not working properly... yet. - Ben Zheng, 2015")
-    else
-        print ("Invalid structtype argument, there are only 3 types of structs currently defined.")
-        print ("We currently only have a hashtable, trie, and D.A.W.G. defined.")
-        print ("These correspond to arguments 1, 2, and 3. Other arguments are not acceptable.")
-        return None;
+    def lookup(self, word):
+        random.seed(word)
+        return (word in self.hashed[random.randint(0,49)])
 
-    print ("ITS WORKING ITS WORKING - Shing-Shing Cao, 2015")
+class dl_algorithm(object):
 
-def correct(word, structtype):
-    if structtype = 1
-        then dict = hashtable(getwords(filename))
-    if word in wordlist:
-        c1 = [word]
-    else:
-        c1 = []
-    c2 = set(x for x in DLalg(word) if x in wordlist)
-    c3 = set(y for x in DLalg(word) for y in DLalg(x) if y in wordlist)
-    candidates = c1 or c2 or c3 or [word]
-    return max(candidates,key=wordlist.get)
+    def __init__(self, dictname, structtype):
+        if structtype == 1:
+            try:
+                self.dict = hashtable(getwords(dictname))
+            except NameError:
+                print ("The hashtable methods are not working properly... yet. - Larry Zhang, 2015")
+        elif structtype == 2:
+            try:
+                self.dict = trie(getwords(dictname))
+            except NameError:
+                print ("The trie methods are not working properly... yet. - Humphrey Obuobi, 2015")
+        elif structtype == 3:
+            try:
+                self.dict = dawg(getwords(dictname))
+            except NameError:
+                print ("The D.A.W.G. methods are not working properly... yet. - Ben Zheng, 2015")
+        else:
+            print ("Invalid structtype argument, there are only 3 types of structs currently defined.")
+            print ("We currently only have a hashtable, trie, and D.A.W.G. defined.")
+            print ("These correspond to arguments 1, 2, and 3. Other arguments are not acceptable.")
 
-print(correct('dawg'))
-print(correct('bollocks'))
-print(correct('the'))
+        print ("ITS WORKING ITS WORKING - Shing-Shing Cao, 2015")
+
+    def correct(self, word):
+        if (self.dict).lookup(word) == True:
+            return word
+        else:
+            dist1 = set(x for x in closest(word) if (self.dict).lookup(x));
+            if dist1:
+                return dist1.pop();
+            else:
+                dist2 = set(y for x in closest(word) for y in closest(x) if (self.dict).lookup(y));
+                if dist2:
+                    return dist2.pop();
+                else:
+                    return "No similar word found"
