@@ -31,15 +31,14 @@ class hashtable(object):
         return (word in self.hashed[random.randint(0,49)])
 
 class dawg(object):
-    
+    x = Dawg()
     def __init__(self,words):
-        x = Dawg()
-        
+        self.DG = dawg.x
         for word in words:
-            x.insert(word)
+            (self.DG).insert(word)
             
     def lookup(word):
-        (self.x).lookup(word)
+        (self.DG).lookup(word)
 
 class hashtable(object):
 
