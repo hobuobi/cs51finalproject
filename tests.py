@@ -4,7 +4,7 @@ import timeit
 
 print ("\ntests.py\n")
 print ("Now testing speed of hash table, trie, and directed acyclic word graph dictionaries.")
-
+print ("Time taken for each test for a given dictionary is cumulative for that data structure.")
 
 print ("Now testing hash table...")
 start = timeit.default_timer()
@@ -18,11 +18,11 @@ print ("You should be seeing 'ranges' above.")
 print ("Input: '', output: " + d.correct('') + ". Time taken: " + str(timeit.default_timer() - start))
 print ("You should be seeing 'a' above.")
 print ("Input: 'asdfghj', output: " + d.correct('asdfghj') + ". Time taken: " + str(timeit.default_timer() - start))
-print ("You should be seeing 'No similar word found' above. If a word has no relatively close matches the autocorrect implementation will just return nothing at all. It took " + str(stop-start) + " seconds for our program to find the best match for the input.")
+print ("You should be seeing 'No similar word found' above. If a word has no relatively close matches the autocorrect implementation will just return nothing at all.")
 
 
 print ("Now testing trie...")
-start2 = timeit.defualt_timer()
+start2 = timeit.default_timer()
 d2 = DLalgorithm.dl_algorithm("words.txt", 2)
 print ("\nTime taken to construct trie dictionary: " + str(timeit.default_timer() - start2))
 
@@ -33,13 +33,13 @@ print ("You should be seeing 'ranges' above.")
 print ("Input: '', output: " + d2.correct('') + ". Time taken: " + str(timeit.default_timer() - start2))
 print ("You shoudl be seeing 'a' above.")
 print ("Input: 'asdfghj', output: " + d2.correct('asdfghj') + ". Time taken: " + str(timeit.default_timer() - start2))
-print ("You should be seeing 'No similar word found' above. If a word has no relatively close matches the autocorrect implementation will just return nothing at all. It took " + str(stop-start) + " seconds for our program to find the best match for the input.")
+print ("You should be seeing 'No similar word found' above. If a word has no relatively close matches the autocorrect implementation will just return nothing at all.")
 
 
-print ("Now testing D.A.W.G...")
-start3 = timeit.defualt_timer()
-d3 = DLalgorithm.dl_algorithm("words.txt", 3)
-print ("\nTime taken to construct trie dictionary: " + str(timeit.default_timer() - start3))
+print ("Now testing D.A.W.G... NOTE THE USE OF 'sortedwords.txt'")
+start3 = timeit.default_timer()
+d3 = DLalgorithm.dl_algorithm("sortedwords.txt", 3)
+print ("\nTime taken to construct dawg dictionary: " + str(timeit.default_timer() - start3))
 
 print ("Input: 'the', output: " + d3.correct('the') + ". Time taken: " + str(timeit.default_timer() - start3))
 print ("You should be seeing 'the' above.")
@@ -48,4 +48,4 @@ print ("You should be seeing 'ranges' above.")
 print ("Input: '', output: " + d3.correct('') + ". Time taken: " + str(timeit.default_timer() - start3))
 print ("You shoudl be seeing 'a' above.")
 print ("Input: 'asdfghj', output: " + d3.correct('asdfghj') + ". Time taken: " + str(timeit.default_timer() - start3))
-print ("You should be seeing 'No similar word found' above. If a word has no relatively close matches the autocorrect implementation will just return nothing at all. It took " + str(stop-start) + " seconds for our program to find the best match for the input.")
+print ("You should be seeing 'No similar word found' above. If a word has no relatively close matches the autocorrect implementation will just return nothing at all.")

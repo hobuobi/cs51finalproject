@@ -1,6 +1,6 @@
 class DNode:
     NextId = 0
-    
+
     def __init__(self):
         self.id = (DNode.NextId)+1
         self.final = False
@@ -19,7 +19,7 @@ class Dawg:
         self.reducedNodes = {}
 
     def insert(self, word):
-	
+
 	# Alphabetical order check.
         if word < self.previous:
             raise Exception("Words must be inserted in alphabetical order.")
@@ -52,10 +52,10 @@ class Dawg:
         x = len(self.uncheckedNodes)-1
         for i in range( x, downTo-1, -1 ):
             (first, l, child) = self.uncheckedNodes[i];
-            if child in self.minimizedNodes:
-                first.edges[l] = self.minimizedNodes[child]
+            if child in self.reducedNodes:
+                first.edges[l] = self.reducedNodes[child]
             else:
-                self.minimizedNodes[child] = child;
+                self.reducedNodes[child] = child;
             self.uncheckedNodes.pop()
 
     def lookup( self, word ):

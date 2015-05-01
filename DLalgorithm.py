@@ -36,8 +36,8 @@ class dawg(object):
         self.DG = dawg.x
         for word in words:
             (self.DG).insert(word)
-            
-    def lookup(word):
+
+    def lookup(self,word):
         (self.DG).lookup(word)
 
 class hashtable(object):
@@ -67,7 +67,7 @@ class trie(object):
         return self.lookuphelper(self.t, word)
 
     def lookuphelper(self, dict, word):
-        
+
         '''
         Returns True if word is in t, false if not
         Precondition t is a trie word is a string
