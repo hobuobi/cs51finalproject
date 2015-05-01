@@ -29,27 +29,31 @@ class hashtable(object):
         random.seed(word)
         return (word in self.hashed[random.randint(0,49)])
 
-_stop = 'zz'
-
 class trie(object):
 
     def __init__(self, vocab):
+        self.stop = "EOF"
         self.t = dict()
         for word in vocab:
             current = self.t
             for letter in word:
                 current = current.setdefault(letter.lower(), {})
-            current = current.setdefault(_stop,_stop)
+            current = current.setdefault(self.stop)
 
     def lookup(self, word):
-        """Returns True if word is in t, false if not
-        Precondition t is a trie word is a string"""
+        return self.lookuphelper(self.t, word)
 
-        letter = word[0:1]
-        if (len(word) == 0) and (_stop in self.t):
+    def lookuphelper(self, dict, word):
+        
+        '''
+        Returns True if word is in t, false if not
+        Precondition t is a trie word is a string
+        '''
+
+        if (len(word) == 0) and (self.stop in dict):
             return True
-        elif letter in self.t:
-            return lookup(self.t[letter], word[1:])
+        elif (word[0:1] in dict):
+            return self.lookuphelper(dict[word[0:1]], word[1:])
         else:
             return False
 
