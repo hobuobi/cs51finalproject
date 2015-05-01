@@ -1,7 +1,7 @@
 from collections import defaultdict
 import re
 import random
-import dawg
+from dawg import *
 
 letters = 'abcdefghijklmnopqrstuvwxyz'
 
@@ -37,6 +37,8 @@ class dawg(object):
         
         for word in words:
             x.insert(word)
+
+        return x
             
     def lookup(word):
         Dawg.lookup(word)
