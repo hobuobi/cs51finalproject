@@ -12,11 +12,15 @@ def trie(vocab):
 _trie1 = trie(open('words.txt'))
 
 def search(t, word):
+	"""Returns True if word is in t, false if not
+	Precondition t is a trie
+	word is a string"""
+
 	letter = word[0:1]
 	if (len(word) == 0) and (_stop in t):
 		return True
 	elif letter in t:
-		lookup(t[letter], word[1:])
+		return True and search(t[letter], word[1:])
 	else:
 		return False
 
