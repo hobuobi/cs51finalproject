@@ -10,6 +10,7 @@ class DNode:
 		self.final = True
 
 class Dawg:
+
     def __init__(self):
         self.previous = ""
         self.root = DNode()
@@ -20,7 +21,7 @@ class Dawg:
         # Nodes checked.
         self.minimizedNodes = {}
 
-    def insert(self,word):
+    def insert( self, word ):
 	
 		# Alphabetical order check.
         if word < self.previous:
@@ -29,8 +30,8 @@ class Dawg:
 
         # find common prefix between word and previous word
         prefixIndex = 0
-        for i in range( min( len( word ), len( self.previousWord ) ) ):
-            if word[i] != self.previousWord[i]: break
+        for i in range( min( len( word ), len( self.previous ) ) ):
+            if word[i] != self.previous[i]: break
             prefixIndex += 1
 
         # Check the uncheckedNodes for redundant nodes, proceeding from last
@@ -48,7 +49,7 @@ class Dawg:
         for l in word[prefixIndex:]:
             nextNode = DNode()
             node.edges[l] = nextNode
-            self.uncheckedNodes.append( (node, letter, nextNode) )
+            self.uncheckedNodes.append( (node, l, nextNode) )
             node = nextNode
 
         node.setFinal
