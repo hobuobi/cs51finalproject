@@ -19,25 +19,25 @@ class Dawg:
         self.uncheckedNodes = []
 
         # Nodes checked.
-        self.minimizedNodes = {}
+        self.reducedNodes = {}
 
-    def insert( self, word ):
+    def insert(self, word):
 	
 		# Alphabetical order check.
         if word < self.previous:
-            raise Exception("Words must be inserted in alphabetical " +
-                "order.")
+            raise Exception("Words must be inserted in alphabetical order.")
 
         # find common prefix between word and previous word
         prefixIndex = 0
-        for i in range( min( len( word ), len( self.previous ) ) ):
+        x = min(len(word),len(self.previous))
+        for i in range( x ):
             if word[i] != self.previous[i]: break
             prefixIndex += 1
 
         # Check the uncheckedNodes for redundant nodes, proceeding from last
         # one down to the common prefix size. Then truncate the list at that
         # point.
-        self._minimize(prefixIndex)
+        self.reducer(prefixIndex)
 
         # add the suffix, starting from the correct node mid-way through the
         # graph
@@ -52,28 +52,26 @@ class Dawg:
             self.uncheckedNodes.append( (node, l, nextNode) )
             node = nextNode
 
-        node.setFinal
+        node.setFinal()
         self.previous = word # Prepares for next addition via this checker
 
     def finish( self ):
-        self._minimize( 0 );
+        self.reducer( 0 );
 
-    def _minimize( self, downTo ):
-        # proceed from the leaf up to a certain point
-        for i in range( len(self.uncheckedNodes) - 1, downTo - 1, -1 ):
-            (parent, letter, child) = self.uncheckedNodes[i];
+    def reducer( self, downTo ):
+        x = len(self.uncheckedNodes)-1
+        for i in range( x, downTo - 1, -1 ):
+            (first, l, child) = self.uncheckedNodes[i];
             if child in self.minimizedNodes:
-                # replace the child with the previously encountered one
-                parent.edges[letter] = self.minimizedNodes[child]
+                first.edges[l] = self.minimizedNodes[child]
             else:
-                # add the state to the minimized nodes.
                 self.minimizedNodes[child] = child;
             self.uncheckedNodes.pop()
 
     def lookup( self, word ):
-        node = self.root
-        for letter in word:
-            if letter not in node.edges: return False
-            node = node.edges[letter]
+        n = self.root
+        for l in word:
+            if l not in n.edges: return False
+            n = n.edges[l]
 
         return True
