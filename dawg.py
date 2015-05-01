@@ -1,60 +1,42 @@
-f = open('words.txt', 'r');
-
-class DawgNode:
+class DNode:
     NextId = 0
     
     def __init__(self):
-        self.id = DawgNode.NextId
-        DawgNode.NextId += 1
+        self.id = (DNode.NextId)+1
         self.final = False
         self.edges = {}
-
-#    def __str__(self):        
-#        arr = []
-#        if self.final: 
-#            arr.append("1")
-#        else:
-#            arr.append("0")
-#
-#        for (label,node) in self.edges.iteritems():
-#            arr.append(label)
-#            arr.append(str(node.id))
-#
-#        return "_".join(arr)
-#
-#    def __hash__(self):
-#        return self.__str__().__hash__()
-#
-#    def __eq__(self, other):
-#        return self.__str__() == other.__str__()
+		
+	def setFinal(self):
+		self.final = True
 
 class Dawg:
     def __init__(self):
-        self.previousWord = ""
-        self.root = DawgNode()
+        self.previous = ""
+        self.root = DNode()
 
-        # Here is a list of nodes that have not been checked for duplication.
+        # Nodes unchecked for duplication.
         self.uncheckedNodes = []
 
-        # Here is a list of unique nodes that have been checked for
-        # duplication.
+        # Nodes checked.
         self.minimizedNodes = {}
 
-    def insert( self, word ):
-        if word < self.previousWord:
-            raise Exception("Error: Words must be inserted in alphabetical " +
+    def insert(self,word):
+	
+		# Alphabetical order check.
+        if word < self.previous:
+            raise Exception("Words must be inserted in alphabetical " +
                 "order.")
 
         # find common prefix between word and previous word
-        commonPrefix = 0
+        prefixIndex = 0
         for i in range( min( len( word ), len( self.previousWord ) ) ):
             if word[i] != self.previousWord[i]: break
-            commonPrefix += 1
+            prefixIndex += 1
 
         # Check the uncheckedNodes for redundant nodes, proceeding from last
         # one down to the common prefix size. Then truncate the list at that
         # point.
-        self._minimize( commonPrefix )
+        self._minimize(prefixIndex)
 
         # add the suffix, starting from the correct node mid-way through the
         # graph
@@ -63,17 +45,16 @@ class Dawg:
         else:
             node = self.uncheckedNodes[-1][2]
 
-        for letter in word[commonPrefix:]:
-            nextNode = DawgNode()
-            node.edges[letter] = nextNode
+        for l in word[prefixIndex:]:
+            nextNode = DNode()
+            node.edges[l] = nextNode
             self.uncheckedNodes.append( (node, letter, nextNode) )
             node = nextNode
 
-        node.final = True
-        self.previousWord = word
+        node.setFinal
+        self.previous = word # Prepares for next addition via this checker
 
     def finish( self ):
-        # minimize all uncheckedNodes
         self._minimize( 0 );
 
     def _minimize( self, downTo ):
@@ -94,13 +75,4 @@ class Dawg:
             if letter not in node.edges: return False
             node = node.edges[letter]
 
-        return node.final
-
-    def nodeCount( self ):
-        return len(self.minimizedNodes)
-
-    def edgeCount( self ):
-        count = 0
-        for node in self.minimizedNodes:
-            count += len(node.edges)
-        return count
+        return True
