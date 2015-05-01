@@ -5,9 +5,6 @@ class DNode:
         self.id = (DNode.NextId)+1
         self.final = False
         self.edges = {}
-		
-	def setFinal(self):
-		self.final = True
 
 class Dawg:
 
@@ -45,7 +42,7 @@ class Dawg:
             self.uncheckedNodes.append( (node, l, nextNode) )
             node = nextNode
 
-        node.setFinal()
+        node.final = True
         self.previous = word # Prepares for next addition via this checker
 
     def finish( self ):
