@@ -57,7 +57,7 @@ class trie(object):
 class dawg(object):
 	
 	def __init__(self,words):
-		x = Dawg
+		x = Dawg()
 		
 		for word in words:
 			x.insert(word)
