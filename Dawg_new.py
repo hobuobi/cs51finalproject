@@ -1,7 +1,7 @@
 class Branch: 
 	
 	def __init__(self):
-		self.node = DNode()
+		self.o_node = DNode()
 		self.t_node = DNode()
 		self.chr = ''
 	def __init__(self, c):
@@ -12,10 +12,17 @@ class Branch:
 		self.o_node = f
 		self.t_node = t
 		self.chr = c
-	def getNode(): 
-		return self.node 
+	def getONode(): 
+		return self.o_node 
 	
-		
+	def getTNode():
+		return self.t_node
+	
+	def setTNode(t):
+		self.t_node = t
+	
+	def setONode(f):
+		self.o_node = f
 class DNode:
 	
 	def __init__(self):
@@ -30,8 +37,21 @@ class DNode:
 		
 	def setFinal():
 		self.final = True
-		
+	
+	def childCheck(xNode, yNode):
+		if (len(xNode.branches_to) != len(yNode.branches_to)):
+			return False
+		else:
+			j = 0
+			while j < len(xNode.branches_to):
+				if (xNode.branches_to)[j] == (yNode.branches_to)[j]:
+					childCheck((xNode.branches_to)[j].getTNode(),(yNode.branches_to)[j].getTNode())
+				else:
+					return False
+		return True
+				
 	def insert (self,word):
+		terminalNodes = []
 		# Phase 1 - create basic trie
 		index = 0
 		currentNode = self
@@ -49,8 +69,17 @@ class DNode:
 				newBranch = Branch(b.chr,currentNode,newNode)
 				(newNode.branches_from).append(newBranch)
 				currentNode = newNode
+			if(index == len(word)-1):
+				terminalNodes.append(currentNode)
 		# Phase 2 - collapse
 		
+		for x in terminalNodes:
+			if(childCheck(currentNode,x)): # childCheck - TODO
+				if(currentNode.branches_from != []) and (x.branches_from != []) :
+					(currentNode.branches_from)[0].setTNode(x)
+				else
+					####
+							
 	def search (word):
 		currentNode = self
 		while (index<len(word)):
