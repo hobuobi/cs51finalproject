@@ -12,16 +12,16 @@ class Branch:
 		self.o_node = f
 		self.t_node = t
 		self.chr = c
-	def getONode(): 
+	def getONode(self): 
 		return self.o_node 
 	
-	def getTNode():
+	def getTNode(self):
 		return self.t_node
 	
-	def setTNode(t):
+	def setTNode(self,t):
 		self.t_node = t
 	
-	def setONode(f):
+	def setONode(self,f):
 		self.o_node = f
 class DNode:
 	
@@ -33,12 +33,12 @@ class DNode:
 	def __init__(self,bt,bf):
 		self.branches_to = []
 		self.branches_from = []
-		self.final = True
+		self.final = False
 		
 	def setFinal(self,x):
 		self.final = x
 	
-	def childCheck(xNode, yNode):
+	def childCheck(self,xNode, yNode):
 		if (len(xNode.branches_to) != len(yNode.branches_to)):
 			return False
 		else:
@@ -72,16 +72,19 @@ class DNode:
 				newNode = DNode([],[])
 				newBranch = Branch(word[index],currentNode,newNode)
 				(newNode.branches_from).append(newBranch)
+				(currentNode.branches_to).append(newBranch)
 				currentNode = newNode
 			if(index == len(word)-1):
 				terminalNodes.append(currentNode)
+				currentNode.setFinal(True)
+			index+=1
 		# Phase 2 - collapse
 		
 		for x in terminalNodes:
-			if(childCheck(currentNode,x)): 
+			if(self.childCheck(currentNode,x)): 
 				print('phase2')
 				if(currentNode.branches_from != []) and (x.branches_from != []) :
-					(currentNode.branches_from)[0].setTNode(x)
+					(currentNode.branches_from)[0].t_node = x
 
 							
 	def search (self,word):
@@ -92,16 +95,17 @@ class DNode:
 			exist = False
 			nextChar = ''
 			for b in currentNode.branches_to:
+				print('b')
 				if b.chr == word[index]:
 					nextChar = b.chr
-					currentNode = b.node
+					currentNode = b.t_node
 					exist = True
+					break
+					
 			index+= 1
-			break
 		if(index == len(word)):
-			print(index)
-			print(len(word))
-		elif(not exist):
+			print('.')
+		if(not exist):
 			print('Not found.')
 		else:
-			print(search+nextChar)			
+			print((self.search)+nextChar)			
