@@ -37,11 +37,9 @@ class dawg(object):
         
         for word in words:
             x.insert(word)
-
-        return x
             
     def lookup(word):
-        Dawg.lookup(word)
+        (self.x).lookup(word)
 
 class hashtable(object):
 
