@@ -1,8 +1,8 @@
-The main files of our project are DLalgorithms.py and tests.py. Please also 
-run tests.py! Most of the other code in this folder is extraneous code we 
-wrote along the way to our final code. Through these files, you may track our
-progress, but our final work consists of the two files mentioned above. Thank 
-you!
+The main files of our project are DLalgorithms.py, dawg.py, and tests.py. 
+Please also run tests.py! Most of the other code in this folder is extraneous
+code we wrote along the way to our final code. Through these files, you may 
+track our progress, but our final work consists of the two files mentioned 
+above. Thank you!
 
 -------------------------------------------------------------------------------
 
@@ -113,13 +113,7 @@ DLalgorithm.py
   dawg
 
     A class implementation of a dictionary as a directed acyclic word graph. It
-    has a single property and two methods.
-
-    The property is as follows:
-
-    dawg
-      This acts as the D.A.W.G. itself. The initializer function modifies this
-      and stores the words of the dictionary.
+    simply inherits directly from dawg.py and has two methods.
 
     The methods are as follows:
 
@@ -130,7 +124,6 @@ DLalgorithm.py
     lookup
       Takes in a word argument. Iterates down the dawg variable checking if the
       word is in the D.A.W.G.
-
 
 tests.py
   
