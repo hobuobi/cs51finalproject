@@ -18,27 +18,14 @@ def getwords(filename):
     words = re.findall('[a-z]+', text.lower())
     return words
 
-class hashtable(object):
-
-    def __init__(self, words):
-        self.hashed = [[] for x in range(50)]
-        for word in words:
-            random.seed(word)
-            (self.hashed[random.randint(0,49)]).append(word)
-
-    def lookup(self, word):
-        random.seed(word)
-        return (word in self.hashed[random.randint(0,49)])
-
 class dawg(object):
-    x = Dawg()
     def __init__(self,words):
-        self.DG = dawg.x
+        self.DG = Dawg()
         for word in words:
             (self.DG).insert(word)
 
     def lookup(self,word):
-        (self.DG).lookup(word)
+        return (self.DG).lookup(word)
 
 class hashtable(object):
 

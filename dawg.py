@@ -19,8 +19,8 @@ class Dawg:
         self.reducedNodes = {}
 
     def insert(self, word):
-
-	# Alphabetical order check.
+	
+	    # Alphabetical order check.
         if word < self.previous:
             raise Exception("Words must be inserted in alphabetical order.")
         prefixIndex = 0
